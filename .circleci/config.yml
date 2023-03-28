@@ -4,7 +4,7 @@ orbs:
   aws-ecr: circleci/aws-ecr@8.2.1
 
 job:
-  build:
+  test:
     docker:
       - image: cimg/base:stable
     steps:
@@ -14,10 +14,12 @@ job:
 workflows:
   foo:
     jobs:
+      - test
       - aws-ecr/build-and-push-image:
           repo: foo
 
   bar:
     jobs:
+      - test
       - aws-ecr/build-and-push-image:
           repo: bar
