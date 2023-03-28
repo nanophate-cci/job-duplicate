@@ -14,7 +14,10 @@ job:
 workflows:
   foo:
     jobs:
-      - build
       - aws-ecr/build-and-push-image:
           repo: foo
 
+  bar:
+    jobs:
+      - aws-ecr/build-and-push-image:
+          repo: bar
