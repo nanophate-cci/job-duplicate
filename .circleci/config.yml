@@ -1,5 +1,9 @@
 version: 2.1
-jobs:
+
+orbs:
+  profiling: nanophate/docker-profiling@1.2.3
+
+job:
   build:
     docker:
       - image: cimg/base:stable
@@ -23,6 +27,7 @@ workflows:
   build_and_deploy:
     jobs:
       - build
+      - profiling/network
       - rspec:
           requires:
             - build
@@ -32,6 +37,7 @@ workflows:
   deploy:
     jobs:
       - build
+      - profiling/network
       - deploy:
           requires:
             - build
