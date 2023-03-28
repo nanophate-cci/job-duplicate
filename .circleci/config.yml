@@ -1,25 +1,37 @@
 version: 2.1
-
-orbs:
-  aws-ecr: circleci/aws-ecr@8.2.1
-
-job:
-  test:
+jobs:
+  build:
     docker:
       - image: cimg/base:stable
     steps:
       - checkout
       - run: echo "hello"
-      
+  rspec:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run: echo "Rspec"
+  deploy:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run: echo "deploy"
 workflows:
-  foo:
+  version: 2
+  build_and_deploy:
     jobs:
-      - test
-      - aws-ecr/build-and-push-image:
-          repo: foo
-
-  bar:
+      - build
+      - rspec:
+          requires:
+            - build
+      - deploy:
+          requires:
+            - rspec
+  deploy:
     jobs:
-      - test
-      - aws-ecr/build-and-push-image:
-          repo: bar
+      - build
+      - deploy:
+          requires:
+            - build
