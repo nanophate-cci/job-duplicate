@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  profiling: nanophate/docker-profiling@1.2.3
+  profiling: nanophate/docker-profiling@0.3.0
 
 job:
   build:
